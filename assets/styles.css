@@ -248,9 +248,9 @@ body {
     font-weight: 500;
 }
 
-.role-badge[data-role="presales"] { background: #FFF3E0; color: #E65100; }
-.role-badge[data-role="rd"] { background: #E3F2FD; color: #1565C0; }
-.role-badge[data-role="delivery"] { background: #E8F5E9; color: #2E7D32; }
+.role-badge[data-role="planner"] { background: #FFF3E0; color: #E65100; }
+.role-badge[data-role="dev"] { background: #E3F2FD; color: #1565C0; }
+.role-badge[data-role="operation"] { background: #E8F5E9; color: #2E7D32; }
 .role-badge[data-role="customer"] { background: #FCE4EC; color: #C2185B; }
 
 .nav-right {
