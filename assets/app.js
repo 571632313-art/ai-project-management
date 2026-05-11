@@ -36,30 +36,34 @@ const state = {
 
 // ========== 角色权限配置 ==========
 const ROLE_PERMISSIONS = {
-    presales: {
-        name: '售前',
+    planner: {
+        name: '策划/制作人',
         color: '#E65100',
+        desc: '需求提出、版本规划、玩法设计、资源协调',
         canCreate: ['projects', 'requirements', 'communications'],
         canEdit: ['projects', 'requirements', 'communications'],
         canViewAll: true
     },
-    rd: {
-        name: '产研',
+    dev: {
+        name: '研发',
         color: '#1565C0',
-        canCreate: ['requirements', 'tasks', 'issues', 'communications'],
-        canEdit: ['requirements', 'tasks', 'issues', 'communications'],
+        desc: '功能开发、BUG修复、性能优化、资源产出',
+        canCreate: ['requirements', 'tasks', 'issues', 'deliverables', 'communications'],
+        canEdit: ['requirements', 'tasks', 'issues', 'deliverables', 'communications'],
         canViewAll: true
     },
-    delivery: {
-        name: '交付',
+    operation: {
+        name: '运营/发行/商业化',
         color: '#2E7D32',
-        canCreate: ['tasks', 'deliverables', 'communications'],
-        canEdit: ['tasks', 'deliverables', 'communications'],
+        desc: '活动设计、付费点配置、舆情监控、玩家服务',
+        canCreate: ['requirements', 'tasks', 'communications'],
+        canEdit: ['requirements', 'tasks', 'communications'],
         canViewAll: true
     },
     customer: {
         name: '客户',
         color: '#C2185B',
+        desc: '外部客户',
         canCreate: ['requirements', 'issues', 'communications'],
         canEdit: ['requirements', 'issues'],
         canViewAll: false // 只能查看关联项目
@@ -581,9 +585,9 @@ const FormTemplates = {
 
     requirement(isEdit = false, data = {}) {
         const roleMap = {
-            'presales': '售前',
-            'rd': '产研',
-            'delivery': '交付',
+            'planner': '策划/制作人',
+            'dev': '研发',
+            'operation': '运营/发行/商业化',
             'customer': '客户'
         };
         
@@ -736,9 +740,9 @@ const FormTemplates = {
 
     issue(isEdit = false, data = {}) {
         const roleMap = {
-            'presales': '售前',
-            'rd': '产研',
-            'delivery': '交付',
+            'planner': '策划/制作人',
+            'dev': '研发',
+            'operation': '运营/发行/商业化',
             'customer': '客户'
         };
         
@@ -888,9 +892,9 @@ const FormTemplates = {
 
     communication(isEdit = false, data = {}) {
         const roleMap = {
-            'presales': '售前',
-            'rd': '产研',
-            'delivery': '交付',
+            'planner': '策划/制作人',
+            'dev': '研发',
+            'operation': '运营/发行/商业化',
             'customer': '客户'
         };
         
