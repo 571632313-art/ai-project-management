@@ -1,0 +1,22 @@
+{
+  "name": "ai-project-management",
+  "version": "1.0.0",
+  "description": "AI项目管理协作系统 - 多角色协作平台",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx serve .",
+    "build": "echo 'Static site - no build needed'",
+    "start": "npx serve ."
+  },
+  "keywords": [
+    "project-management",
+    "collaboration",
+    "kdocs",
+    "wps"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.2.0"
+  }
+}
