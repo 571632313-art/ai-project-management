@@ -1096,21 +1096,27 @@ const App = {
         const role = state.currentRole;
         const permissions = ROLE_PERMISSIONS[role];
         
+        // 按钮ID与模块名的映射
+        const btnToModule = {
+            'addProjectBtn': 'projects',
+            'addRequirementBtn': 'requirements',
+            'addTaskBtn': 'tasks',
+            'addIssueBtn': 'issues',
+            'addDeliverableBtn': 'deliverables',
+            'addCommunicationBtn': 'communications'
+        };
+        
         // 控制新建按钮
-        ['addProjectBtn', 'addRequirementBtn', 'addTaskBtn', 'addIssueBtn', 'addDeliverableBtn', 'addCommunicationBtn'].forEach(id => {
+        Object.entries(btnToModule).forEach(([id, module]) => {
             const btn = document.getElementById(id);
-            const module = id.replace('add', '').toLowerCase() + 's';
-            if (permissions.canCreate.includes(module)) {
-                btn.style.display = '';
-            } else {
-                btn.style.display = 'none';
+            if (btn) {
+                if (permissions.canCreate.includes(module)) {
+                    btn.style.display = '';
+                } else {
+                    btn.style.display = 'none';
+                }
             }
         });
-
-        // 客户角色只能查看关联项目
-        if (role === 'customer') {
-            document.getElementById('addProjectBtn').style.display = 'none';
-        }
     },
 
     /**
