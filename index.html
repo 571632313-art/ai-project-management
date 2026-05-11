@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI项目管理协作系统</title>
+    <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+    <!-- 登录页面 -->
+    <div id="loginPage" class="page active">
+        <div class="login-container">
+            <div class="login-header">
+                <h1>🤖 AI项目管理协作系统</h1>
+                <p>多角色协作 · 项目全生命周期管理</p>
+            </div>
+            <div class="role-selection">
+                <h2>请选择您的角色</h2>
+                <div class="role-grid">
+                    <div class="role-card" data-role="presales">
+                        <div class="role-icon">💼</div>
+                        <h3>售前</h3>
+                        <p>客户需求收集<br>方案输出<br>项目启动</p>
+                    </div>
+                    <div class="role-card" data-role="rd">
+                        <div class="role-icon">⚙️</div>
+                        <h3>产研</h3>
+                        <p>需求开发<br>技术实现<br>问题修复</p>
+                    </div>
+                    <div class="role-card" data-role="delivery">
+                        <div class="role-icon">📦</div>
+                        <h3>交付</h3>
+                        <p>部署实施<br>培训支持<br>交付验收</p>
+                    </div>
+                    <div class="role-card" data-role="customer">
+                        <div class="role-icon">👤</div>
+                        <h3>客户</h3>
+                        <p>需求提交<br>进度查看<br>验收确认</p>
+                    </div>
+                </div>
+                <div class="user-name-input">
+                    <label>请输入您的姓名：</label>
+                    <input type="text" id="userName" placeholder="输入姓名" maxlength="20">
+                </div>
+                <button id="loginBtn" class="btn-primary" disabled>进入系统</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主应用页面 -->
+    <div id="mainApp" class="page">
+        <!-- 顶部导航 -->
+        <header class="top-nav">
+            <div class="nav-left">
+                <div class="logo">🤖 AI项目管理协作系统</div>
+                <div class="current-user">
+                    <span id="currentRole" class="role-badge"></span>
+                    <span id="currentUser"></span>
+                </div>
+            </div>
+            <div class="nav-right">
+                <button id="refreshBtn" class="btn-icon" title="刷新数据">🔄</button>
+                <button id="logoutBtn" class="btn-secondary">退出登录</button>
+            </div>
+        </header>
+
+        <!-- 统计概览 -->
+        <div class="stats-bar">
+            <div class="stat-card">
+                <div class="stat-num" id="projectCount">0</div>
+                <div class="stat-label">项目总数</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num" id="requirementCount">0</div>
+                <div class="stat-label">需求总数</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num" id="taskCount">0</div>
+                <div class="stat-label">任务总数</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num" id="issueCount">0</div>
+                <div class="stat-label">问题总数</div>
+            </div>
+        </div>
+
+        <!-- 标签页导航 -->
+        <div class="tab-nav">
+            <button class="tab-btn active" data-tab="projects">📋 项目总览</button>
+            <button class="tab-btn" data-tab="requirements">📝 需求管理</button>
+            <button class="tab-btn" data-tab="tasks">✅ 任务跟踪</button>
+            <button class="tab-btn" data-tab="issues">⚠️ 问题反馈</button>
+            <button class="tab-btn" data-tab="deliverables">📦 交付物</button>
+            <button class="tab-btn" data-tab="communications">💬 沟通记录</button>
+        </div>
+
+        <!-- 内容区域 -->
+        <div class="content-area">
+            <!-- 项目总览 -->
+            <div id="projects" class="tab-content active">
+                <div class="content-header">
+                    <h2>项目总览</h2>
+                    <button id="addProjectBtn" class="btn-primary">+ 新建项目</button>
+                </div>
+                <div class="filter-bar">
+                    <select id="projectStatusFilter">
+                        <option value="">全部状态</option>
+                        <option value="正常">正常</option>
+                        <option value="有风险">有风险</option>
+                        <option value="延期">延期</option>
+                        <option value="暂停">暂停</option>
+                    </select>
+                    <select id="projectPhaseFilter">
+                        <option value="">全部阶段</option>
+                        <option value="售前阶段">售前阶段</option>
+                        <option value="需求确认">需求确认</option>
+                        <option value="开发中">开发中</option>
+                        <option value="测试验收">测试验收</option>
+                        <option value="已交付">已交付</option>
+                    </select>
+                </div>
+                <div id="projectList" class="card-list"></div>
+            </div>
+
+            <!-- 需求管理 -->
+            <div id="requirements" class="tab-content">
+                <div class="content-header">
+                    <h2>需求管理</h2>
+                    <button id="addRequirementBtn" class="btn-primary">+ 提交需求</button>
+                </div>
+                <div class="filter-bar">
+                    <select id="reqStatusFilter">
+                        <option value="">全部状态</option>
+                        <option value="待评估">待评估</option>
+                        <option value="已确认">已确认</option>
+                        <option value="开发中">开发中</option>
+                        <option value="待测试">待测试</option>
+                        <option value="已验收">已验收</option>
+                    </select>
+                    <select id="reqTypeFilter">
+                        <option value="">全部类型</option>
+                        <option value="功能需求">功能需求</option>
+                        <option value="技术需求">技术需求</option>
+                        <option value="优化需求">优化需求</option>
+                        <option value="Bug修复">Bug修复</option>
+                    </select>
+                </div>
+                <div id="requirementList" class="card-list"></div>
+            </div>
+
+            <!-- 任务跟踪 -->
+            <div id="tasks" class="tab-content">
+                <div class="content-header">
+                    <h2>任务跟踪</h2>
+                    <button id="addTaskBtn" class="btn-primary">+ 创建任务</button>
+                </div>
+                <div class="filter-bar">
+                    <select id="taskStatusFilter">
+                        <option value="">全部状态</option>
+                        <option value="待开始">待开始</option>
+                        <option value="进行中">进行中</option>
+                        <option value="待审核">待审核</option>
+                        <option value="已完成">已完成</option>
+                    </select>
+                    <select id="taskPriorityFilter">
+                        <option value="">全部优先级</option>
+                        <option value="紧急">紧急</option>
+                        <option value="高">高</option>
+                        <option value="中">中</option>
+                        <option value="低">低</option>
+                    </select>
+                </div>
+                <div id="taskList" class="card-list"></div>
+            </div>
+
+            <!-- 问题反馈 -->
+            <div id="issues" class="tab-content">
+                <div class="content-header">
+                    <h2>问题反馈</h2>
+                    <button id="addIssueBtn" class="btn-primary">+ 提交问题</button>
+                </div>
+                <div class="filter-bar">
+                    <select id="issueStatusFilter">
+                        <option value="">全部状态</option>
+                        <option value="已识别">已识别</option>
+                        <option value="处理中">处理中</option>
+                        <option value="待确认">待确认</option>
+                        <option value="已解决">已解决</option>
+                    </select>
+                    <select id="issueSeverityFilter">
+                        <option value="">全部严重程度</option>
+                        <option value="致命">致命</option>
+                        <option value="严重">严重</option>
+                        <option value="一般">一般</option>
+                        <option value="轻微">轻微</option>
+                    </select>
+                </div>
+                <div id="issueList" class="card-list"></div>
+            </div>
+
+            <!-- 交付物 -->
+            <div id="deliverables" class="tab-content">
+                <div class="content-header">
+                    <h2>交付物管理</h2>
+                    <button id="addDeliverableBtn" class="btn-primary">+ 添加交付物</button>
+                </div>
+                <div class="filter-bar">
+                    <select id="deliverableStatusFilter">
+                        <option value="">全部状态</option>
+                        <option value="编写中">编写中</option>
+                        <option value="待审核">待审核</option>
+                        <option value="审核通过">审核通过</option>
+                        <option value="已交付">已交付</option>
+                        <option value="已验收">已验收</option>
+                    </select>
+                </div>
+                <div id="deliverableList" class="card-list"></div>
+            </div>
+
+            <!-- 沟通记录 -->
+            <div id="communications" class="tab-content">
+                <div class="content-header">
+                    <h2>沟通记录</h2>
+                    <button id="addCommunicationBtn" class="btn-primary">+ 添加记录</button>
+                </div>
+                <div class="filter-bar">
+                    <select id="commTypeFilter">
+                        <option value="">全部类型</option>
+                        <option value="会议">会议</option>
+                        <option value="邮件">邮件</option>
+                        <option value="电话">电话</option>
+                        <option value="即时通讯">即时通讯</option>
+                    </select>
+                </div>
+                <div id="communicationList" class="card-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 模态框 -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">标题</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div id="modalBody" class="modal-body"></div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal()">取消</button>
+                <button id="modalConfirmBtn" class="btn-primary">确认</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast 提示 -->
+    <div id="toast" class="toast"></div>
+
+    <script src="assets/app.js"></script>
+</body>
+</html>
